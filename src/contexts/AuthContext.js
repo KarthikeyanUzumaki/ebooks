@@ -47,6 +47,21 @@ export const AuthProvider = ({ children }) => {
       setError('');
       setLoading(true);
       
+      // Temporary: Simulate successful login without backend
+      // Remove this block and uncomment the axios call below when you have PHP backend running
+      const token = 'demo-token-' + Date.now();
+      const user = {
+        id: 1,
+        email: email,
+        name: email.split('@')[0],
+        token: token
+      };
+      localStorage.setItem('authToken', token);
+      setCurrentUser(user);
+      return { success: true };
+      
+      // Uncomment this when you have PHP backend running:
+      /*
       const response = await axios.post('http://localhost/login-system/login.php', {
         email,
         password
@@ -61,6 +76,7 @@ export const AuthProvider = ({ children }) => {
         setError(response.data.message || 'Login failed');
         return { success: false, message: response.data.message };
       }
+      */
     } catch (error) {
       console.error('Login error:', error);
       setError('Network error. Please try again.');
@@ -107,6 +123,21 @@ export const AuthProvider = ({ children }) => {
       setError('');
       setLoading(true);
       
+      // Temporary: Simulate successful signup without backend
+      // Remove this block and uncomment the axios call below when you have PHP backend running
+      const token = 'demo-token-' + Date.now();
+      const user = {
+        id: Math.floor(Math.random() * 1000) + 1,
+        email: email,
+        name: name || email.split('@')[0],
+        token: token
+      };
+      localStorage.setItem('authToken', token);
+      setCurrentUser(user);
+      return { success: true };
+      
+      // Uncomment this when you have PHP backend running:
+      /*
       const response = await axios.post('http://localhost/login-system/signup.php', {
         name,
         email,
@@ -122,6 +153,7 @@ export const AuthProvider = ({ children }) => {
         setError(response.data.message || 'Signup failed');
         return { success: false, message: response.data.message };
       }
+      */
     } catch (error) {
       console.error('Signup error:', error);
       setError('Network error. Please try again.');
